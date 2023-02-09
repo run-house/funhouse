@@ -2,7 +2,7 @@ import runhouse as rh
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 
-def causal_lm_generate(prompt, model_id='google/flan-t5-xxl', **model_kwargs):
+def causal_lm_generate(prompt, model_id='google/flan-t5-xl', **model_kwargs):
     (tokenizer, model) = rh.get_pinned_object(model_id) or (None, None)
     if model is None:
         tokenizer = AutoTokenizer.from_pretrained(model_id)
