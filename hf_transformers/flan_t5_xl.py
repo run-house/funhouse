@@ -1,11 +1,12 @@
 import runhouse as rh
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+import torch
 
 
 def causal_lm_generate(prompt, model_id='google/flan-t5-xl', **model_kwargs):
     (tokenizer, model) = rh.get_pinned_object(model_id) or (None, None)
     if model is None:
-        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        tokenizer = AutoTokenizer.from_pretrained(model_id, device_map="auto", torch_dtype=torch.float16)
         model = AutoModelForSeq2SeqLM.from_pretrained(model_id).to('cuda')
         rh.pin_to_memory(model_id, (tokenizer, model))
     inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     my_prompt = "My grandmother's recipe for pasta al limone is as follows:"
     sequences = flan_t5_generate(my_prompt, max_new_tokens=1000, min_length=20, temperature=2.0, repetition_penalty=3.0,
                                  use_cache=True, do_sample=True, num_beams=2, num_return_sequences=4,
-                                 stream_logs=True)
+                                 stream_logs=False)
 
     sequences = [f"{my_prompt} {seq}" for seq in sequences]
     for seq in sequences:
