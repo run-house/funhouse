@@ -5,7 +5,7 @@ def launch_gradio_space(space_name):
     import gradio as gr  # If we put this inside the function, it doesn't even need to be installed locally
     gr.Interface.load("spaces/" + space_name).launch()
 
-# Based on https://huggingface.co/spaces/pharma/CLIP-Interrogator/
+# Based on https://huggingface.co/spaces/timbrooks/instruct-pix2pix
 
 if __name__ == "__main__":
     # For GCP, Azure, or Lambda Labs

@@ -3,12 +3,12 @@ from diffusers import StableDiffusionInstructPix2PixPipeline
 from PIL import Image
 import torch
 
+# Based on: https://github.com/timothybrooks/instruct-pix2pix
 
 def instruct_pix2pix_generate(instruction, base_images, num_images=1,
                               steps=50, text_cfg_scale=7.5, image_cfg_scale=1.5,
                               model_id="timbrooks/instruct-pix2pix"):
-    # Here we're using Runhouse's object pinning to hold the model in GPU memory. See p01a for more details.
-    # We're changing the name of the pinned model to avoid a collision if reusing the cluster from p01a.
+    # Here we're using Runhouse's object pinning to hold the model in GPU memory.
     pipe = rh.get_pinned_object(model_id)
     if pipe is None:
         torch.backends.cuda.matmul.allow_tf32 = True
@@ -45,7 +45,7 @@ if __name__ == "__main__":
     instruction = 'Make this into a beautiful summer painting by Claude Monet.'
     rh_base_image = Image.open('../assets/rh_logo.png').convert("RGB")
 
-    # This takes ~3 mins to run the first time to download the model, and after that should only take ~1 sec per image.
+    # This takes ~8 mins to run the first time to download the model, and after that should only take ~8 sec per image.
     rh_logo_sd_images = instruct_pix2pix_generate_gpu(instruction, [rh_base_image], num_images=4,
                                                       steps=50, stream_logs=True)
     [image.show() for image in rh_logo_sd_images]
