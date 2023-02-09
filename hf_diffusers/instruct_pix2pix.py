@@ -47,5 +47,5 @@ if __name__ == "__main__":
 
     # This takes ~3 mins to run the first time to download the model, and after that should only take ~1 sec per image.
     rh_logo_sd_images = instruct_pix2pix_generate_gpu(instruction, [rh_base_image], num_images=4,
-                                                      steps=50, stream_logs=False)
+                                                      steps=50, stream_logs=True)
     [image.show() for image in rh_logo_sd_images]
