@@ -1,4 +1,4 @@
-# 🤡 funhouse
+# 🎪 funhouse
 
 Fun stuff to do with runhouse, organized into standalone scripts.
 

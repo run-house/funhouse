@@ -1,7 +1,6 @@
 import runhouse as rh
 
 def launch_gradio_space(space_name):
-    # TODO find a way to infer the reqs from the space
     import gradio as gr  # If we put this inside the function, it doesn't even need to be installed locally
     gr.Interface.load("spaces/" + space_name).launch()
 
