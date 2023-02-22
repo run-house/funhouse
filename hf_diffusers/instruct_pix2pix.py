@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     reqs = ['./', 'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
             'diffusers', 'accelerate', 'transformers']
-    instruct_pix2pix_generate_gpu = rh.send(fn=instruct_pix2pix_generate).to(gpu, reqs=reqs)
+    instruct_pix2pix_generate_gpu = rh.function(fn=instruct_pix2pix_generate).to(gpu, reqs=reqs)
 
     instruction = "Make this into an illustration for a children's book."
     base_image = Image.open('../assets/rh_logo.png').convert("RGB").resize((512, 512))

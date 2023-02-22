@@ -24,7 +24,7 @@ if __name__ == "__main__":
             'transformers', 'gradio', 'fairscale', 'ftfy',
             'huggingface-hub', 'Pillow', 'timm',
             'open_clip_torch', 'clip-interrogator==0.3.1']
-    my_space = rh.send(fn=launch_gradio_space).to(gpu, reqs=reqs)
+    my_space = rh.function(fn=launch_gradio_space).to(gpu, reqs=reqs)
 
     gpu.ssh_tunnel(local_port=7860, remote_port=7860)
     gpu.keep_warm()

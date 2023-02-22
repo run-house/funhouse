@@ -30,7 +30,7 @@ if __name__ == "__main__":
             'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
             'diffusers',
             'transformers']
-    generate_karlo_gpu = rh.send(fn=unclip_generate_img).to(gpu, reqs=reqs)
+    generate_karlo_gpu = rh.function(fn=unclip_generate_img).to(gpu, reqs=reqs)
 
     # The first time we run this it will take ~8 minutes to download the model, which is pretty large.
     # Subsequent calls will only take ~1 second per image

@@ -38,7 +38,7 @@ if __name__ == "__main__":
             'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
             'diffusers',
             'transformers']
-    sd_img2img_generate_gpu = rh.send(fn=sd_generate_img_to_img).to(gpu, reqs=reqs)
+    sd_img2img_generate_gpu = rh.function(fn=sd_generate_img_to_img).to(gpu, reqs=reqs)
 
     rh_prompt = 'A picture of a woman running above a picture of a house.'
     rh_base_image = Image.open('rh_logo.png').convert("RGB")

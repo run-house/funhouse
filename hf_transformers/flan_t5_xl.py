@@ -28,7 +28,7 @@ if __name__ == "__main__":
     reqs = ['./',
             'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
             'transformers']
-    flan_t5_generate = rh.send(fn=causal_lm_generate).to(gpu, reqs=reqs)
+    flan_t5_generate = rh.function(fn=causal_lm_generate).to(gpu, reqs=reqs)
 
     # The first time this runs it will take ~20 minutes to download the model. After that it takes ~20 seconds.
     # Generation options: https://huggingface.co/docs/transformers/main/en/main_classes/text_generation#transformers.GenerationConfig

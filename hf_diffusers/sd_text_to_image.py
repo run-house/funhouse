@@ -29,7 +29,7 @@ if __name__ == "__main__":
             'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
             'diffusers',
             'transformers']
-    generate_gpu = rh.send(fn=sd_generate_txt_to_img).to(gpu, reqs=reqs)
+    generate_gpu = rh.function(fn=sd_generate_txt_to_img).to(gpu, reqs=reqs)
     my_prompt = 'A hot dog made of matcha powder.'
     images = generate_gpu(my_prompt, num_images=4, steps=50)
     [image.show() for image in images]
