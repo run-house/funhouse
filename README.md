@@ -19,3 +19,7 @@ Then run a script:
 ```commandline
 python hf_diffusers/sd_text_to_image.py
 ```
+
+## 👷‍♀️ Contributing
+
+We welcome contributions! Please check out [contributing](CONTRIBUTING.md) if you're interested.
