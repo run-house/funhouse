@@ -1,9 +1,8 @@
+import requests
 from PIL import Image
 import runhouse as rh
-import requests
 from transformers import AutoProcessor, Blip2ForConditionalGeneration
 import torch
-
 
 def blip2_img_to_txt(
     images,
