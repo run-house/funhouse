@@ -4,6 +4,7 @@ import runhouse as rh
 from transformers import AutoProcessor, Blip2ForConditionalGeneration
 import torch
 
+
 def blip2_img_to_txt(
     images,
     prompts: list[str | None] = None,
@@ -39,15 +40,22 @@ if __name__ == "__main__":
     # gpu = rh.cluster(name='rh-a10x', instance_type='A100:1')
 
     # For AWS (single A100s not available, base A10G may have insufficient CPU RAM)
-    gpu = rh.cluster(name='rh-a10x', instance_type='g5.2xlarge', provider='aws')
+    # gpu = rh.cluster(name='rh-a10x', instance_type='g5.2xlarge', provider='aws')
 
     # To use our own GPU (or from a different provider, e.g. Paperspace, Coreweave)
     # gpu = rh.cluster(ips=['<ip of the cluster>'],
     #                  ssh_creds={'ssh_user': '...', 'ssh_private_key':'<path_to_key>'},
     #                  name='rh-a10x')
 
+    gpu = (
+        rh.cluster(name="rh-a10x")
+        if rh.exists("rh-a10x")
+        else rh.cluster(name="rh-a10x", instance_type="g5.2xlarge", provider="aws")
+    )
+
     reqs = [
         "./",
+        'pillow',
         "torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117",
         "transformers",
     ]
