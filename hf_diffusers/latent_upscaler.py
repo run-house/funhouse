@@ -27,7 +27,8 @@ def sd_latent_upscaler(
 
 if __name__ == "__main__":
     # For GCP, Azure, or Lambda Labs
-    gpu = rh.cluster(name='rh-a10x', instance_type='A100:1').save()
+    # gpu = rh.cluster(name='rh-a10x', instance_type='A100:1').save()
+    gpu = rh.cluster(name='rh-a10x')
 
     # For AWS (single A100s not available, only A10G)
     # gpu = rh.cluster(name='rh-a10x', instance_type='g5.2xlarge', provider='aws')
@@ -41,8 +42,8 @@ if __name__ == "__main__":
     reqs = ["./",  "torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117",
             "diffusers", "transformers"]
     
-    prompt = "Two raccoons on a date eating tacos."
-    num_imgs = 2
+    prompt = "sad mark zuckerberg."
+    num_imgs = 4
 
     # generate images using stable diffusion
     generate_gpu = rh.function(fn=sd_generate).to(gpu, reqs=reqs)
