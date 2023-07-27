@@ -46,7 +46,7 @@ if __name__ == "__main__":
     control_net_generate_gpu = rh.function(fn=control_net_generate).to(gpu, reqs=reqs)
 
     prompt = "Woman running on a house."
-    base_image = Image.open('../assets/rh_logo.png').convert("RGB").resize((512, 512))
+    base_image = Image.open('../_assets/rh_logo.png').convert("RGB").resize((512, 512))
 
     # TODO: update this comment
     # This takes ~8 mins to run the first time to download the model, and after that should only take ~2.5 sec per image.

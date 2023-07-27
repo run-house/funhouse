@@ -35,7 +35,7 @@ if __name__ == "__main__":
     instruct_pix2pix_generate_gpu = rh.function(fn=instruct_pix2pix_generate).to(gpu, reqs=reqs)
 
     instruction = "Make this into an illustration for a children's book."
-    base_image = Image.open('../assets/rh_logo.png').convert("RGB").resize((512, 512))
+    base_image = Image.open('../_assets/rh_logo.png').convert("RGB").resize((512, 512))
 
     # This takes ~8 mins to run the first time to download the model, and after that should only take ~2.5 sec per image.
     rh_logo_sd_images = instruct_pix2pix_generate_gpu(instruction, base_image,
