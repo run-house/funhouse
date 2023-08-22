@@ -1,19 +1,17 @@
 import runhouse as rh
-from transformers import IdeficsForVisionText2Text, AutoProcessor, BitsAndBytesConfig, TextStreamer
+from transformers import IdeficsForVisionText2Text, AutoProcessor, TextStreamer
 import torch
 
 
 class IDEFICSModel(rh.Module):
-    def __init__(self, model_id="HuggingFaceM4/idefics-9b", **model_kwargs):
+    def __init__(self, model_id="HuggingFaceM4/idefics-9b-instruct", **model_kwargs):
         super().__init__()
         self.model_id, self.model_kwargs = model_id, model_kwargs
         self.processor, self.model = None, None
 
     def load_model(self):
-        quantization_config = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype="float16")
         self.processor = AutoProcessor.from_pretrained(self.model_id)
-        self.model = IdeficsForVisionText2Text.from_pretrained(self.model_id, quantization_config=quantization_config,
-                                                               **self.model_kwargs)
+        self.model = IdeficsForVisionText2Text.from_pretrained(self.model_id, **self.model_kwargs)
 
     def predict(self, prompt, stream=True, **inf_kwargs):
         if not self.model:
@@ -31,15 +29,16 @@ if __name__ == "__main__":
                        "pillow", "sentencepiece", "scipy"], name="ideficsinference", working_dir="./")
 
     remote_idefics_model = IDEFICSModel(torch_dtype=torch.bfloat16,
+                                        load_in_8bit=True,
                                         device_map='auto').get_or_to(gpu, env=env, name="idefics-model")
 
     prompts = [
-        "Instruction: provide an answer to the question. Use the image to answer.\n",
+        "Instruction: Tell me a story about this image.\n",
         "https://a-z-animals.com/media/2021/10/african-elephant-loxodonta-africana-calf-masai-mara-park-in-kenya-picture-id1262780463.jpg",
-        "Question: What's in the picture? Answer: \n"
+        "Answer: \n"
     ]
-    test_output = remote_idefics_model.predict(prompts, max_length=50)
+    test_output = remote_idefics_model.predict(prompts, max_length=100, temperature=0.7, repetition_penalty=1.0)
 
-    print("\n\n... Test Output ...\n")
+    print("\n\n... Full output ...\n")
     print(test_output)
     print("\n\n")
