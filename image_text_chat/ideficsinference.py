@@ -27,11 +27,9 @@ if __name__ == "__main__":
     gpu = rh.ondemand_cluster(name='rh-a10x', instance_type='A10G:1').up_if_not()
     env = rh.env(reqs=["transformers>=4.32.0", "accelerate>=0.21.0", "bitsandbytes>=0.41.1", "safetensors>=0.3.1",
                        "pillow", "sentencepiece", "scipy"], name="ideficsinference", working_dir="./")
-
     remote_idefics_model = IDEFICSModel(torch_dtype=torch.bfloat16,
                                         load_in_8bit=True,
                                         device_map='auto').get_or_to(gpu, env=env, name="idefics-model")
-
     prompts = [
         "Instruction: Tell me a story about this image.\n",
         "https://a-z-animals.com/media/2021/10/african-elephant-loxodonta-africana-calf-masai-mara-park-in-kenya-picture-id1262780463.jpg",
