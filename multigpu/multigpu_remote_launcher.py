@@ -18,7 +18,7 @@ def launch_train(*args):
 
 
 if __name__ == "__main__":
-    # Refer to https://runhouse-docs.readthedocs-hosted.com/en/main/rh_primitives/cluster.html#hardware-setup
+    # Refer to https://www.run.house/docs/stable/en/api/python/cluster#hardware-setup
     # for cloud access setup instructions (if using on-demand hardware), and for API specifications.
 
     # on-demand GPU

@@ -36,5 +36,5 @@ Runhouse with Airflow, and how using both packages together gives us the best of
 for defining workflows across heterogenous compute, and a robust orchestration tool for scheduling, triggering and 
 monitoring workflows.
 
-[**Docs**](https://runhouse-docs.readthedocs-hosted.com/en/latest/index.html):
+[**Docs**](https://www.run.house/docs/stable/en):
 High-level overviews of the architecture, detailed API references, and basic API examples.
