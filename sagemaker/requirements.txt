@@ -1,0 +1,6 @@
+diffusers
+runhouse[sagemaker]
+sagemaker
+torch
+torchvision
+transformers
