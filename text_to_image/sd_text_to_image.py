@@ -24,7 +24,7 @@ class SDModel(rh.Module):
 
 
 if __name__ == "__main__":
-    gpu = rh.cluster(name='rh-a10x', instance_type='A10:1')
+    gpu = rh.cluster(name='rh-a10x', instance_type='A10G:1')
     model_gpu = SDModel().get_or_to(system=gpu, env=["torch", "diffusers", "transformers"], name="sd_model")
     my_prompt = 'A hot dog made of matcha powder.'
     images = model_gpu.predict(my_prompt, num_images=4, steps=50)

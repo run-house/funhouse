@@ -22,7 +22,7 @@ expensive to maintain.
 
 This folder contains examples highlighting two use cases: 
 
-(1) [**Serverless**](serverless): Creating a microservice. 
+(1) [**Serverless**](inference): Creating a microservice. 
 
 Runhouse facilitates easier access to the SageMaker compute from different environments. 
 You can interact with the compute from notebooks, IDEs, research, pipeline DAG, or any python interpreter. 
@@ -40,5 +40,5 @@ can SSH directly into the cluster and suspend autostop even if the job has compl
 [**Docs**](https://www.run.house/docs):
 High-level overviews of the architecture, detailed API references, and basic API examples.
 
-**Blog**: Coming soon ... 
+**Blog**: Coming soon... 
 
