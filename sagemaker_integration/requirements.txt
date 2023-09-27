@@ -4,3 +4,4 @@ sagemaker
 torch
 torchvision
 transformers
+xgboost
