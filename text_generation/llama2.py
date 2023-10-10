@@ -1,4 +1,3 @@
-import os
 import runhouse as rh
 from transformers import TextStreamer, AutoTokenizer, AutoModelForCausalLM
 import torch
