@@ -17,7 +17,7 @@ more detailed tutorials and docs [here](https://github.com/run-house/tutorials).
 
 Then run a script:
 ```commandline
-python hf_diffusers/sd_text_to_image.py
+python text_to_image/sd_text_to_image.py
 ```
 
 ## 👷‍♀️ Contributing
