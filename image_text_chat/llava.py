@@ -46,7 +46,7 @@ class LlavaModel(rh.Module):
         self.image_processor = vision_tower.image_processor
         disable_torch_init()
 
-    def setup_image(self, img_path: str) -> None:
+    def load_image(self, img_path: str) -> None:
         import requests
         from PIL import Image
         from io import BytesIO
@@ -109,7 +109,7 @@ class LlavaModel(rh.Module):
                 
         """Start a new chat with a new image."""
         conv_mode = "v1"
-        self.setup_image(img_path)
+        self.load_image(img_path)
         self.conv = conv_templates[conv_mode].copy()
         self.roles = self.conv.roles
         first_input = (DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN +
