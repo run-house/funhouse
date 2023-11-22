@@ -1,3 +1,6 @@
+# LLaVA is an open-source chatbot trained by fine-tuning LLaMA/Vicuna on GPT-generated multimodal instruction-following data.
+# This example shows how to run inference of LLaVA-v1.5-7B (https://huggingface.co/liuhaotian/llava-v1.5-7b) using Runhouse (https://run.house).
+
 import runhouse as rh
 import torch
 from transformers import AutoTokenizer, BitsAndBytesConfig
