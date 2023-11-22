@@ -31,8 +31,6 @@ class LlavaModel(rh.Module):
                     device_map: str,
                     load_in_8_bit: bool,
                     **quant_kwargs) -> None:
-
-
         quant_cfg = BitsAndBytesConfig(**quant_kwargs)
         self.model = LlavaLlamaForCausalLM.from_pretrained(model_id,
                                                            low_cpu_mem_usage=True,
@@ -101,7 +99,6 @@ class LlavaModel(rh.Module):
                        max_new_tokens=1024,
                        use_cache=True,
                        **kwargs) -> str:
-        
         if not self.model:
             self.load_models(model_id=self.model_id,
                              device_map='auto',
