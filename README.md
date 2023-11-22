@@ -19,6 +19,10 @@ Then run a script:
 ```commandline
 python text_to_image/sd_text_to_image.py
 ```
+Or
+```commandline
+python3 -m image_text_chat.llava
+```
 
 ## 👷‍♀️ Contributing
 
