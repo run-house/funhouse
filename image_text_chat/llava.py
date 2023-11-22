@@ -154,7 +154,7 @@ if __name__ == "__main__":
     gpu = rh.ondemand_cluster(name='rh-a10x', instance_type='A10G:1').up_if_not()
     gpu.run(['pip install git+https://github.com/haotian-liu/LLaVA.git@786aa6a19ea10edc6f574ad2e16276974e9aaa3a'])
     env = rh.env(reqs=["llava"], name="llavainference", working_dir="./")
-    remote_llava_model = LlavaModel().get_or_to(system=gpu, env=env, name="llava-model").pin()
+    remote_llava_model = LlavaModel().get_or_to(system=gpu, env=env, name="llava-model")
     
     ans = remote_llava_model.start_new_chat(img_path="https://upcdn.io/kW15bGw/raw/uploads/2023/09/22/file-387X.png",
                              prompt="How would I make this dish? Step by step please.")
