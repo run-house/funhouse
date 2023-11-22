@@ -12,7 +12,6 @@ from llava.utils import disable_torch_init
 from llava.constants import DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
 from llava.conversation import conv_templates, SeparatorStyle
 import torch
-import ipyplot
 
 
 class LlavaModel(rh.Module):
