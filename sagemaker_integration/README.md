@@ -9,16 +9,20 @@ months, and leads to rampant code duplication, forking, versioning and lineage i
 The Runhouse [SageMakerCluster](https://www.run.house/docs/main/en/api/python/cluster#sagemakercluster-class) abstraction 
 provides a few core benefits: 
 
-* **Serverless Compute**: SageMaker provides a more serverless experience than EC2, which means you don't need to be 
+* **Serverless compute**: SageMaker provides a more serverless experience than EC2, which means you don't need to be 
 responsible for auto-stopping, scheduling, or worry about spinning up and managing a K8s cluster. With SageMaker you
 can easily launch multiple instances at the same time.
 
-* **Launching with Containers**: SageMaker allows you to launch a cluster with a docker container. This gives you a 
+* **Launching with containers**: SageMaker allows you to launch a cluster with a docker container. This gives you a 
 more K8s like experience of launching compute with a lightweight image rather than an 
 [AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html), which is more difficult to publish and 
 expensive to maintain.
 
-* **GPU Availability**: We've observed that GPUs tend to be more available on SageMaker compared to EC2. 
+* **More reliable scaling**: Instead of maintaining a fleet of GPUs with some orchestrator like ECS, 
+SageMaker allows you to trigger many jobs in parallel. If you have training or batch jobs which are triggered by 
+customers, SageMaker is a much more reliable way to maintain those jobs at scale.
+
+* **GPU availability**: We've observed that GPUs tend to be more available on SageMaker compared to EC2. 
 
 ## 🚀 Getting Started
 
@@ -44,7 +48,7 @@ directly from the cluster.
 
 ### [**Training**](training): Running a training job on a SageMaker instance. 
 
-Let's use a simple PyTorch model to illustrate the different ways we can run training on SageMaker compute via Runhouse.
+We'll use a simple PyTorch model to illustrate the different ways we can run training on SageMaker compute via Runhouse.
 In each of these examples, Runhouse is responsible for spinning up the requested SageMaker compute, and executing the 
 training code on the cluster.
 
@@ -65,7 +69,7 @@ that's been saved, without the need for packaging up the model and deploying it 
 (3) [**Train with Estimator**](training/train_with_estimator): Use the SageMaker SDK to create an
 [estimator](https://sagemaker.readthedocs.io/en/stable/api/training/estimators.html). This is useful if you are already 
 using the SageMaker APIs. In this example, we define a SageMaker estimator which loads in the training code from 
-a separate file. 
+a separate file where the training code lives. 
 
 ### [**Hyperparameter Tuning**](hyperparameter_tuning): Running a hyperparameter tuning job on a SageMaker instance. 
 

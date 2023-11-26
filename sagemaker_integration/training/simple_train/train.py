@@ -1,5 +1,6 @@
 import argparse
 import os
+import dotenv
 
 import torch
 import torch.nn as nn
@@ -9,6 +10,8 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 
 import runhouse as rh
+
+dotenv.load_dotenv()
 
 
 class MyModel(nn.Module):
@@ -100,7 +103,7 @@ if __name__ == "__main__":
                                       role=os.getenv("AWS_ROLE_ARN"),
                                       instance_type="ml.g5.2xlarge").up_if_not().save()
 
-    remote_train = rh.function(train_model, name="train_model").to(sm_cluster, env=["./", "torch", "torchvision"])
+    remote_train = rh.function(train_model, name="train_model").to(sm_cluster, env=["torch", "torchvision"])
 
     # Call the training stub, which executes remotely on the SageMaker compute
     remote_train(args.learning_rate, args.batch_size, args.num_epochs)

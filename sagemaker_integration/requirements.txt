@@ -1,5 +1,6 @@
 diffusers
 runhouse[sagemaker]
+ray[tune]
 sagemaker
 torch
 torchvision

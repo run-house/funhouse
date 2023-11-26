@@ -1,7 +1,10 @@
 import os
+import dotenv
 import runhouse as rh
 from transformers import TextStreamer, AutoTokenizer, AutoModelForCausalLM
 import torch
+
+dotenv.load_dotenv()
 
 
 class HFChatModel(rh.Module):
@@ -31,8 +34,9 @@ if __name__ == "__main__":
                                autostop_mins=-1,
                                ).up_if_not().save()
 
-    env = rh.env(reqs=["transformers==4.31.0", "accelerate==0.21.0", "bitsandbytes==0.40.2", "safetensors>=0.3.1", "scipy"],
-                 name="llama2inference", working_dir="../aws_sagemaker/")
+    env = rh.env(
+        reqs=["transformers==4.31.0", "accelerate==0.21.0", "bitsandbytes==0.40.2", "safetensors>=0.3.1", "scipy"],
+        name="llama2inference", working_dir="../aws_sagemaker/")
     gpu.sync_secrets(["huggingface"])  # Needed to use Llama2 because it's a gated model
 
     remote_hf_chat_model = HFChatModel(model_id="meta-llama/Llama-2-13b-chat-hf",
@@ -41,7 +45,8 @@ if __name__ == "__main__":
                                        device_map='auto').get_or_to(gpu, env=env, name="llama-13b-model")
 
     test_prompt = "Tell me about unified development interfaces into compute and data infrastructure."
-    test_output = remote_hf_chat_model.predict(test_prompt, temperature=0.7, max_new_tokens=4000, repetition_penalty=1.0)
+    test_output = remote_hf_chat_model.predict(test_prompt, temperature=0.7, max_new_tokens=4000,
+                                               repetition_penalty=1.0)
 
     print("\n\n... Test Output ...\n")
     print(test_output)
