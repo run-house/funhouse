@@ -1,4 +1,5 @@
-import io
+import json
+from io import StringIO
 
 import boto3
 from datasets import load_dataset
@@ -35,9 +36,6 @@ def preprocess(hf_token):
     dataset_df = dataset_df[dataset_df['clarity'] > 1.5]
     return dataset_df.to_json(orient="records")
 
-def summer(a,b):
-    return  a+b
-
 
 if __name__ == '__main__':
     # name of the parameters in ssm which stores your hugging face token
@@ -45,8 +43,11 @@ if __name__ == '__main__':
     ssm_client = boto3.client('ssm')
     huggingface_token = ssm_client.get_parameter(Name=hf_token_name, WithDecryption=True)
     preprocess_lambda = rh.aws_lambda_fn(fn=preprocess,
-                                         name="funchouse_perp_lambda",
-                                         env=['pandas', 'datasets', 'huggingface_hub'])
+                                         name="funhouse-preprocess-data",
+                                         env=['pandas', 'datasets', 'huggingface_hub']).save()
     data = preprocess_lambda(huggingface_token['Parameter']['Value'])
-    print(data.head())
+    data = json.loads(data)
+    df = pd.DataFrame(json.loads(data['body']))
+    print(df.head())
+
 
