@@ -1,6 +1,5 @@
 import runhouse as rh
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-import json
 import torch
 from pathlib import Path
 
@@ -32,5 +31,4 @@ if __name__ == '__main__':
     with open(str(Path.cwd() / "text_to_sum.txt")) as text2sum:
         txt_to_sum = text2sum.read()
     summery = summarize_txt_lambda(txt_to_sum)
-    summery = json.loads(summery)['body']
     print(f"Article's summery is: {summery}")

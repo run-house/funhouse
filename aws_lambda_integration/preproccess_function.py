@@ -36,15 +36,13 @@ def preprocess(hf_token):
 
 if __name__ == '__main__':
     # name of the parameters in ssm which stores your hugging face token
-    hf_token_name = "/huggingFace/sasha/token"
-    ssm_client = boto3.client('ssm')
-    huggingface_token = ssm_client.get_parameter(Name=hf_token_name, WithDecryption=True)
+    huggingface_token = "add_your_hugging_face_token_here"
     preprocess_lambda = rh.aws_lambda_fn(fn=preprocess,
                                          name="funhouse-preprocess-data",
                                          env=['pandas', 'datasets', 'huggingface_hub']).save()
-    data = preprocess_lambda(huggingface_token['Parameter']['Value'])
+    data = preprocess_lambda(huggingface_token)
     data = json.loads(data)
-    df = pd.DataFrame(json.loads(data['body']))
+    df = pd.DataFrame(data)
     print(df.head())
 
 
