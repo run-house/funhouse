@@ -49,8 +49,9 @@ python preproccess_function.py <MY-HUGGING-FACE-TOKEN>
 python summarization_hf_to_lambda.py
 ```
 
-Please note that these examples are two stand-alone examples, and are not depending on one another. Meaning, there is 
-no particular order in which the examples should be run.
+Please note that these examples are two stand-alone examples, and are not depending on one another. There is 
+no particular order in which the examples should be run. Moreover, you might run only one of the examples, if you wish
+to do so. 
 
 The examples can be run from any IDE or python environment. 
 
