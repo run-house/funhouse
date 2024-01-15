@@ -30,5 +30,5 @@ if __name__ == '__main__':
                                             name="summarize_txt_hf").save()
     with open(str(Path.cwd() / "text_to_sum.txt")) as text2sum:
         txt_to_sum = text2sum.read()
-    summery = summarize_txt_lambda(txt_to_sum)
-    print(f"Article's summery is: {summery}")
+    summary = summarize_txt_lambda(txt_to_sum)
+    print(f"Article's summary is: {summary}")

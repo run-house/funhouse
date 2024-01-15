@@ -1,9 +1,8 @@
-import json
-import boto3
 from datasets import load_dataset
 from huggingface_hub import login
 import pandas as pd
 import runhouse as rh
+import sys
 
 
 def download_data(data_set_path, split, data_set_name=None):
@@ -31,17 +30,15 @@ def preprocess(hf_token):
     dataset_df = dataset_df[dataset_df["fact1"].notna()]
     dataset_df = dataset_df[dataset_df['humanScore'] > 0.81]
     dataset_df = dataset_df[dataset_df['clarity'] > 1.5]
-    return dataset_df.to_json(orient="records")
+    return dataset_df.to_dict(orient="records")
 
 
 if __name__ == '__main__':
     # name of the parameters in ssm which stores your hugging face token
-    huggingface_token = "add_your_hugging_face_token_here"
     preprocess_lambda = rh.aws_lambda_fn(fn=preprocess,
                                          name="funhouse-preprocess-data",
                                          env=['pandas', 'datasets', 'huggingface_hub']).save()
-    data = preprocess_lambda(huggingface_token)
-    data = json.loads(data)
+    data = preprocess_lambda(sys.argv[1])
     df = pd.DataFrame(data)
     print(df.head())
 
