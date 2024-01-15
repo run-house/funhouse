@@ -44,6 +44,7 @@ pip install -r requirements.txt
 * Execute any example you like:
 ```
 python preproccess_function.py <MY-HUGGING-FACE-TOKEN>
+
 python summarization_hf_to_lambda.py
 ```
 Please note that these examples are two stand-alone examples, and are not depending on one another. Meaning, there is 
