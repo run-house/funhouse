@@ -1,9 +1,17 @@
+import argparse
+import os
+import dotenv
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.utils.data as data
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
+
+import runhouse as rh
+
+dotenv.load_dotenv()
 
 
 class MyModel(nn.Module):
@@ -38,15 +46,7 @@ class MyDataset(data.Dataset):
         return len(self.data)
 
 
-if __name__ == "__main__":
-    # Set random seed for reproducibility
-    torch.manual_seed(42)
-
-    # Define hyperparameters
-    learning_rate = 0.001
-    batch_size = 64
-    num_epochs = 10
-
+def train_model(learning_rate, batch_size, num_epochs):
     # Load the MNIST dataset and apply transformations
     train_dataset = datasets.MNIST(
         root="./data", train=True, transform=transforms.ToTensor(), download=True
@@ -70,7 +70,8 @@ if __name__ == "__main__":
 
     # Training loop
     for epoch in range(num_epochs):
-        running_loss = 0.0
+        # running_loss = 0.0
+        print(f"Epoch: {epoch}")
         for batch_idx, (inputs, targets) in enumerate(dataloader):
             # Zero the gradients
             optimizer.zero_grad()
@@ -82,3 +83,30 @@ if __name__ == "__main__":
             # Backward pass and optimization
             loss.backward()
             optimizer.step()
+
+
+if __name__ == "__main__":
+    # Set random seed for reproducibility
+    torch.manual_seed(42)
+
+    parser = argparse.ArgumentParser()
+
+    # Define command-line arguments with default values
+    parser.add_argument("--learning_rate", type=float, default=0.001, help="Learning rate")
+    parser.add_argument("--batch_size", type=int, default=64, help="Batch size")
+    parser.add_argument("--num_epochs", type=int, default=10, help="Number of epochs")
+
+    args = parser.parse_args()
+
+    # Launch the SageMaker cluster (if not already up)
+    sm_cluster = rh.sagemaker_cluster(name="rh-sagemaker-training",
+                                      role=os.getenv("AWS_ROLE_ARN"),
+                                      instance_type="ml.g5.2xlarge").up_if_not().save()
+
+    remote_train = rh.function(train_model, name="train_model").to(sm_cluster, env=["torch", "torchvision"])
+
+    # Call the training stub, which executes remotely on the SageMaker compute
+    remote_train(args.learning_rate, args.batch_size, args.num_epochs)
+
+    # Save for future re-use
+    remote_train.save()
