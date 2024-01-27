@@ -9,9 +9,7 @@ if __name__ == "__main__":
     gpu.up_if_not()
     gpu.install_packages([rh.GitPackage(git_url='https://github.com/huggingface/diffusers.git',
                                         install_method='pip', revision='v0.11.1'),
-                          'datasets', 'accelerate', 'transformers', 'bitsandbytes',
-                          'torch --upgrade --extra-index-url https://download.pytorch.org/whl/cu117',
-                          'torchvision --upgrade --extra-index-url https://download.pytorch.org/whl/cu117'])
+                          'datasets', 'accelerate', 'transformers', 'bitsandbytes', 'torch', 'torchvision'])
 
     rh.folder(path=input_images_dir).to(system=gpu, path='dreambooth/instance_images')
 
